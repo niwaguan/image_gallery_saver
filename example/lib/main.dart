@@ -105,8 +105,10 @@ class _MyHomePageState extends State<MyHomePage> {
     ByteData? byteData =
         await (image.toByteData(format: ui.ImageByteFormat.png));
     if (byteData != null) {
-      final result =
-          await ImageGallerySaver.saveImage(byteData.buffer.asUint8List());
+      final result = await ImageGallerySaver.saveImage(
+        byteData.buffer.asUint8List(),
+        name: "img.png",
+      );
       print(result);
       Utils.toast(result.toString());
     }

@@ -143,13 +143,14 @@ class ImageGallerySaverPlugin : FlutterPlugin, MethodCallHandler {
         var fileUri: Uri? = null
         var fos: OutputStream? = null
         var success = false
+        var usPng = name != null && name.endsWith(".png");
         try {
-            fileUri = generateUri("jpg", name = name)
+            fileUri = generateUri(if (usPng) "png" else "jpg", name = name)
             if (fileUri != null) {
                 fos = context.contentResolver.openOutputStream(fileUri)
                 if (fos != null) {
                     println("ImageGallerySaverPlugin $quality")
-                    bmp.compress(Bitmap.CompressFormat.JPEG, quality, fos)
+                    bmp.compress(if (usPng) Bitmap.CompressFormat.PNG else Bitmap.CompressFormat.JPEG, quality, fos)
                     fos.flush()
                     success = true
                 }
